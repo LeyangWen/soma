@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
     parser.add_argument('--wandb_name', default='Debug', help='wandb run name')
     parser.add_argument('--slurm_id', default=0, type=int, help='The slurm id of this run')
-    parser.add_argument('--debug_mode', action='store_true')  # default: False if store_true
+    parser.add_argument('--debug_mode', action='store_false')  # default: False if store_true
     parser.add_argument('--arg_notes', default="Empty", type=str, help='notes for this run, will be stored in wandb')
 
     # Parse the arguments
@@ -69,8 +69,8 @@ if __name__ == '__main__':
             },
             run_tasks=[
                 'mosh',
-                # 'render',
+                'render',
             ],
-            # fast_dev_run=True,
+            fast_dev_run=args.debug_mode,
         )
     wandb_run.finish()

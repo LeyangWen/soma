@@ -60,6 +60,9 @@ if __name__ == '__main__':
                 'render.show_markers': True,
                 # 'render.save_final_blend_file': True
                 'dirs.support_base_dir': support_base_dir,
+                'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
+                'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
+                'temp_base_dir': osp.join(work_base_dir, 'temp'),
 
             },
             parallel_cfg={
@@ -68,7 +71,7 @@ if __name__ == '__main__':
                 'randomly_run_jobs': True,
             },
             run_tasks=[
-                'mosh',
+                # 'mosh',
                 'render',
             ],
             fast_dev_run=args.debug_mode,

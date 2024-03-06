@@ -1,6 +1,23 @@
+# Test dir setup
+
+```bash
+mkdir SOMA_Test
+cd SOMA_Test
+mkdir support_files
+cd support_files
+mkdir evaluation_mocaps
+mkdir marker_layouts
+mkdir smplx
+mkdir blender
+```
+
 This contains the example c3d inputs used in [solve_labeled_mocap tutorial](https://github.com/nghorbani/soma/blob/main/src/tutorials/solve_labeled_mocap.ipynb)
 
 Some file structures are listed in [run_soma_on_soma_dataset](https://github.com/nghorbani/soma/blob/main/src/tutorials/run_soma_on_soma_dataset.ipynb)
+
+And [blender files](https://github.com/nghorbani/soma/issues/18) --> support_files/blender/blender_files
+
+```bash
 ### File structure after extraction 
 base folder is `SOMA_Test/support_files`
 ```tree

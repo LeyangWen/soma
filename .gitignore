@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .idea/
 /SOMA_Test/support_files/evaluation_mocaps/original/SOMA_manual_labeled/
+/SOMA_Test/support_files/blender/blend_files/

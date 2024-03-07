@@ -17,6 +17,8 @@ Some file structures are listed in [run_soma_on_soma_dataset](https://github.com
 
 And [blender files](https://github.com/nghorbani/soma/issues/18) --> support_files/blender/blender_files
 
+`/home/leyang/anaconda3/envs/soma/lib/python3.7/site-packages/body_visualizer/tools/render_tools.py` line 26, misspelled 'sucess' --> 'success'
+
 ```bash
 ### File structure after extraction 
 base folder is `SOMA_Test/support_files`

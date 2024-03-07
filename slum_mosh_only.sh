@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 #SBATCH --job-name=Moshpp-debug
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
@@ -32,3 +32,8 @@ python -u src/tutorials/solve_labeled_mocap.py \
 --slurm_id ${SLURM_JOB_ID} > "output_slurm/${SLURM_JOB_ID}_output.out"
 
 #--debug_mode \
+
+module load python3.10-anaconda
+module load python/3.10.4
+module load cuda/11.6.2
+module load pytorch/1.12.1

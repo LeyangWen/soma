@@ -35,6 +35,8 @@ go to the root directory of SOMA code and run
 pip install -r requirements.txt
 python setup.py develop
 ````
+If you encounter permission issues in slurm, add --user to the end of the python setup command.
+
 Copy the precompiled 
 [smpl-fast-derivatives](https://download.is.tue.mpg.de/download.php?domain=soma&sfile=smpl-fast-derivatives.tar.bz2) 
 into your python site-packages folder, i.e. ````anaconda3/envs/soma/lib/python3.7/site-packages````.
@@ -46,6 +48,7 @@ Hint: clone the mesh repository and run the following from the anaconda environm
 To use the rendering capabilities first install an instance of Blender-2.83 LTS on your machine.
 Afterward uncompress contents of the precompiled 
 [bpy-2.83](https://download.is.tue.mpg.de/download.php?domain=soma&sfile=blender/bpy-2.83-20200908.tar.bz2) 
+keep the outter folder as bpy-2.83xxx and copy 
 into your python site-packages folder, i.e. ````anaconda3/envs/soma/lib/python3.7/site-packages````. 
 
 Last but not least, the current SOMA code relies on [MoSh++](https://github.com/nghorbani/moshpp) mocap solver. 

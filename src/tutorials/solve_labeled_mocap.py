@@ -6,16 +6,18 @@ from loguru import logger
 import argparse
 from soma.amass.mosh_manual import mosh_manual
 
-# todo: change file path again
-# todo: modify settings.json to include gender info
-# todo: set marker layout template?
+# todo: try with our c3d and see if it work
+# todo: get slurm working so that it is faster
+# todo: marker height currently 9.5 mm. for us, 14/2+2 = 9mm for all, change it possible
+# todo: remember to add settings.json to include gender info for every subject
+# todo: do we need to set marker layout template?
 
 
 def parse_args():
     # Create the parser
     parser = argparse.ArgumentParser(description='Moshpp-VEHS-7M')
     # Add the arguments
-    parser.add_argument('--soma_work_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_Test', help='The base directory for SOMA work')
+    parser.add_argument('--soma_work_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS', help='The base directory for SOMA work')
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
     # parser.add_argument('--mocap_base_dir', type=str, default=None, help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
@@ -30,6 +32,7 @@ def parse_args():
     # Parse the arguments
     args = parser.parse_args()
     return args
+
 
 if __name__ == '__main__':
     args = parse_args()
@@ -63,6 +66,7 @@ if __name__ == '__main__':
                 'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
                 'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
                 'temp_base_dir': osp.join(work_base_dir, 'temp'),
+                # 'render.video_fps': 60
 
             },
             parallel_cfg={
@@ -71,7 +75,7 @@ if __name__ == '__main__':
                 'randomly_run_jobs': True,
             },
             run_tasks=[
-                # 'mosh',
+                'mosh',
                 'render',
             ],
             fast_dev_run=args.debug_mode,

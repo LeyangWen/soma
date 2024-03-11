@@ -15,6 +15,7 @@ SOMA **automatically transforms raw marker-based mocap point clouds** (black dot
 ### Wen note
 * Make sure it is run on 3.7 since some packages are not compatible
 * When running in slurm,
+  * Add `--user` after `python setup.py xxx` commands if encounter write permission issues
   * `module load eigen tbb`
   * Skip sudo apt install steps
   * Change `/soma/moshpp/src/moshpp/scan2mesh/mesh_distance/sample2meshdist.h` line 4 to `#include "Eigen/Core"`

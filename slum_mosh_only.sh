@@ -20,6 +20,7 @@ module load cudnn/11.8-v8.7.0
 module load cupti/11.8.0
 module load python/3.10.4
 module load pytorch/2.0.1
+module load eigen tbb
 module list
 
 conda activate soma

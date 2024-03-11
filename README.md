@@ -12,6 +12,16 @@ SOMA **automatically transforms raw marker-based mocap point clouds** (black dot
 
 ## Installation
 
+### Wen note
+* Make sure it is run on 3.7 since some packages are not compatible
+* When running in slurm,
+  * `module load eigen tbb`
+  * Skip sudo apt install steps
+  * Change `/soma/moshpp/src/moshpp/scan2mesh/mesh_distance/sample2meshdist.h` line 4 to `#include "Eigen/Core"`
+
+
+### Original
+
 SOMA is originally developed in Python 3.7, PyTorch 1.8.2 LTS, for Ubuntu 20.04.2 LTS. 
 Below we prepare the python environment using [Anaconda](https://www.anaconda.com/products/individual), 
 however, we opt for a simple pip package manager for installing dependencies.

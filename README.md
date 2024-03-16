@@ -14,6 +14,7 @@ SOMA **automatically transforms raw marker-based mocap point clouds** (black dot
 
 ### Wen note
 * Make sure it is run on 3.7 since some packages are not compatible
+* To use your own moshpp marker vertex id mapping, replace the `marker_vids.py` before make 
 * When running in slurm,
   * Add `--user` after `python setup.py xxx` commands if encounter write permission issues
   * `module load eigen tbb`
@@ -63,6 +64,12 @@ keep the outter folder as bpy-2.83xxx and copy
 into your python site-packages folder, i.e. ````anaconda3/envs/soma/lib/python3.7/site-packages````. 
 
 Last but not least, the current SOMA code relies on [MoSh++](https://github.com/nghorbani/moshpp) mocap solver. 
+* Before make step, replace the `marker_vids.py` with your own mapping
+```bash
+  cp support_data/Test-Leyang/marker_vids.py moshpp/src/moshpp/marker_layout/marker_vids.py
+  cp support_data/Test-Leyang/create_marker_layout_for_mocaps.py moshpp/src/moshpp/marker_layout/create_marker_layout_for_mocaps.py
+```
+
 Please install MoSh++ following the guidelines in its repository.
 
 Leyang: Done

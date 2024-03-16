@@ -17,7 +17,7 @@ def parse_args():
     # Create the parser
     parser = argparse.ArgumentParser(description='Moshpp-VEHS-7M')
     # Add the arguments
-    parser.add_argument('--soma_work_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_Test', help='The base directory for SOMA work')
+    parser.add_argument('--soma_work_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS', help='The base directory for SOMA work')
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
     # parser.add_argument('--mocap_base_dir', type=str, default=None, help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')

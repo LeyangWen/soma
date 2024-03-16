@@ -41,3 +41,4 @@ tables
 transforms3d
 xlsxwriter
 jupyterlab
+wandb

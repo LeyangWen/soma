@@ -14,27 +14,29 @@
 ##### END preamble
 
 my_job_header
-module load python3.10-anaconda
-module load cuda/11.8.0
-module load cudnn/11.8-v8.7.0
-module load cupti/11.8.0
-module load python/3.10.4
-module load pytorch/2.0.1
+
+conda activate soma3.7
+
+module load clang/2022.1.2
+module load gcc/10.3.0
+module load gcc/13.2.0
+module load intel/2022.1.2
+module load boost/1.78.0
 module load eigen tbb
+module load blender
 module list
 
-conda activate soma
+
 mkdir output_slurm
 
 slurm_name=$SLURM_JOB_NAME
 #API_KEY="API_KEY"
 python -u src/tutorials/solve_labeled_mocap.py \
+--soma_work_base_dir /nfs/turbo/coe-shdpm/leyang/SOMA/VEHS-7M \
+--mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/c3d/S1/ \
+--target_ds_names ["S1"] \
 --wandb_name $slurm_name \
 --slurm_id ${SLURM_JOB_ID} > "output_slurm/${SLURM_JOB_ID}_output.out"
 
 #--debug_mode \
 
-module load python3.10-anaconda
-module load python/3.10.4
-module load cuda/11.6.2
-module load pytorch/1.12.1

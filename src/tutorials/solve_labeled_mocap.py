@@ -6,11 +6,12 @@ from loguru import logger
 import argparse
 from soma.amass.mosh_manual import mosh_manual
 
-# todo: try with our c3d and see if it work
-# todo: get slurm working so that it is faster
-# todo: marker height currently 9.5 mm. for us, 14/2+2 = 9mm for all, change it possible
+
+# todo: get slurm working so that it is faster, test on S1 and another subject
 # todo: remember to add settings.json to include gender info for every subject
-# todo: do we need to set marker layout template?
+
+# todo: See if HDTP and MDFH cause trouble because of hardhat
+# todo: weight for HDTP and MDFH smaller? or just use independent markerlayout for each activity?
 
 
 def parse_args():
@@ -19,7 +20,7 @@ def parse_args():
     # Add the arguments
     parser.add_argument('--soma_work_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS', help='The base directory for SOMA work')
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
-    # parser.add_argument('--mocap_base_dir', type=str, default=None, help='The base directory for mocap files')
+    parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
     parser.add_argument('--target_ds_names', nargs='+', default=['SOMA_manual_labeled',], help='Target dataset names')
 
@@ -38,14 +39,17 @@ if __name__ == '__main__':
     args = parse_args()
     soma_work_base_dir = args.soma_work_base_dir
     support_base_dir = osp.join(soma_work_base_dir, 'support_files')
-    mocap_base_dir = osp.join(support_base_dir, 'evaluation_mocaps/original')
+    mocap_base_dir = args.mocap_base_dir
     work_base_dir = osp.join(soma_work_base_dir, 'running_just_mosh')
     target_ds_names = args.target_ds_names
 
     wandb_run = wandb.init(project=args.wandb_project, name=args.wandb_name, notes=args.arg_notes)
 
     for ds_name in target_ds_names:
-        mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
+        if args.slurm_id ==0:
+            mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
+        else:  # slurm file structure
+            mocap_fnames = glob(osp.join(mocap_base_dir, ds_name, '*.c3d'))
 
         logger.info(f'#mocaps found for {ds_name}: {len(mocap_fnames)}')
 

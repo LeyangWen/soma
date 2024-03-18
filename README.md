@@ -19,8 +19,17 @@ SOMA **automatically transforms raw marker-based mocap point clouds** (black dot
   * Add `--user` after `python setup.py xxx` commands if encounter write permission issues
   * `module load eigen tbb`
   * Skip sudo apt install steps
-  * Change `/soma/moshpp/src/moshpp/scan2mesh/mesh_distance/sample2meshdist.h` line 4 to `#include "Eigen/Core"`
-
+  * For mesh install
+    * Boot include dir: `$BOOST_INCLUDE`
+    * i.e., `BOOST_INCLUDE_DIRS=$BOOST_INCLUDE make all`
+    * or `BOOST_ROOT=$BOOST_ROOT make all `
+  * For moshpp install
+    * Change `/soma/moshpp/src/moshpp/scan2mesh/mesh_distance/sample2meshdist.h` line 4 to `#include "Eigen/Core"`
+    * `cd moshpp/src/moshpp/scan2mesh/mesh_distance` to `make`
+    * `cd ../../../..` to `python setup.py install --user`
+  * For blender
+    * Load from module
+    * rename bpy-2.83-20200908 to bpy
 
 ### Original
 
@@ -55,7 +64,7 @@ into your python site-packages folder, i.e. ````anaconda3/envs/soma/lib/python3.
 The final directory should look like ````anaconda3/envs/soma/lib/python3.7/site-packages/psbody/smpl````.
 
 Install the psbody.mesh library following the instructions in [https://github.com/MPI-IS/mesh](https://github.com/MPI-IS/mesh).
-Hint: clone the mesh repository and run the following from the anaconda environment:  ````python setup.py install ````.
+Hint (not a good hint, just follow mesh instructions): clone the mesh repository and run the following from the anaconda environment:  ````python setup.py install ````.
 
 To use the rendering capabilities first install an instance of Blender-2.83 LTS on your machine.
 Afterward uncompress contents of the precompiled 

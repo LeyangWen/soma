@@ -22,7 +22,7 @@ def parse_args():
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
     parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
-    parser.add_argument('--target_ds_names', type=list, default=['S02',], help='Target dataset names')
+    parser.add_argument('--target_ds_names', nargs='+', default=['S02',], help='Target dataset names')
 
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
     parser.add_argument('--wandb_name', default='Run_S1', help='wandb run name')
@@ -48,10 +48,6 @@ if __name__ == '__main__':
     for ds_name in target_ds_names:
         mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
         print('mocap_fnames:', mocap_fnames)
-        print('mocap_base_dir:', mocap_base_dir)
-        print('ds_name:', ds_name)
-        print()
-        print(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
 
         logger.info(f'#mocaps found for {ds_name}: {len(mocap_fnames)}')
         wandb_run.log({'mosh_finished': 0, 'render_finished': 0, 'time': time.time()})

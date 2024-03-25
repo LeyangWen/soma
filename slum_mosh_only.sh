@@ -9,7 +9,7 @@
 #SBATCH --mem=8g
 #SBATCH --partition=standard
 ##SBATCH --partition=debug
-#SBATCH --time=00:30:00
+#SBATCH --time=23:30:00
 #SBATCH --account=shdpm0
 ##### END preamble
 
@@ -32,9 +32,9 @@ mkdir output_slurm
 slurm_name=$SLURM_JOB_NAME
 #API_KEY="API_KEY"
 python -u src/tutorials/solve_labeled_mocap.py \
---soma_work_base_dir /nfs/turbo/coe-shdpm/leyang/SOMA/VEHS-7M \
---mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/c3d/S1/ \
---target_ds_names ["S1"] \
+--soma_work_base_dir /nfs/turbo/coe-shdpm/leyang/SOMA/VEHS-7M/ \
+--mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/ \
+--target_ds_names ["c3d"] \
 --wandb_name $slurm_name \
 --slurm_id ${SLURM_JOB_ID} > "output_slurm/${SLURM_JOB_ID}_output.out"
 

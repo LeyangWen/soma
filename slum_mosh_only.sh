@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=Moshpp-debug
+#SBATCH --job-name=Moshpp-Slum-all
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
 #SBATCH --mail-type=BEGIN,END,FAIL

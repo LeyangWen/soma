@@ -47,6 +47,11 @@ if __name__ == '__main__':
 
     for ds_name in target_ds_names:
         mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
+        print('mocap_fnames:', mocap_fnames)
+        print('mocap_base_dir:', mocap_base_dir)
+        print('ds_name:', ds_name)
+        print()
+        print(glob(osp.join(mocap_base_dir, ds_name,  '*.c3d')))
 
         logger.info(f'#mocaps found for {ds_name}: {len(mocap_fnames)}')
         wandb_run.log({'mosh_finished': False, 'render_finished': False, 'time': time.time()})

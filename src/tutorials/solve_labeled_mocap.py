@@ -43,8 +43,6 @@ if __name__ == '__main__':
     mocap_base_dir = args.mocap_base_dir
     work_base_dir = osp.join(soma_work_base_dir, 'running_just_mosh')
     target_ds_names = args.target_ds_names
-    logger.remove()
-    logger.add(sys.stderr, level="INFO")
 
     wandb_run = wandb.init(project=args.wandb_project, name=args.wandb_name, notes=args.arg_notes)
 

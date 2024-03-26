@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=Moshpp-Slum-all
+#SBATCH --job-name=Moshpp-Slum-all-9
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
 #SBATCH --mail-type=BEGIN,END,FAIL
@@ -9,7 +9,7 @@
 #SBATCH --mem=128g
 #SBATCH --partition=standard
 ##SBATCH --partition=debug
-#SBATCH --time=23:30:00
+#SBATCH --time=25:00:00
 #SBATCH --account=shdpm0
 ##### END preamble
 

@@ -6,6 +6,7 @@ from loguru import logger
 import argparse
 from soma.amass.mosh_manual import mosh_manual
 import time
+import sys
 
 # todo: get slurm working so that it is faster, test on S1 and another subject
 # todo: remember to add settings.json to include gender info for every subject
@@ -42,6 +43,8 @@ if __name__ == '__main__':
     mocap_base_dir = args.mocap_base_dir
     work_base_dir = osp.join(soma_work_base_dir, 'running_just_mosh')
     target_ds_names = args.target_ds_names
+    logger.remove()
+    logger.add(sys.stderr, level="INFO")
 
     wandb_run = wandb.init(project=args.wandb_project, name=args.wandb_name, notes=args.arg_notes)
 
@@ -50,7 +53,6 @@ if __name__ == '__main__':
         print('mocap_fnames:', mocap_fnames)
 
         logger.info(f'#mocaps found for {ds_name}: {len(mocap_fnames)}')
-        wandb_run.log({'mosh_finished': 0, 'render_finished': 0, 'time': time.time()})
         mosh_manual(
             mocap_fnames,
             mosh_cfg={
@@ -74,7 +76,7 @@ if __name__ == '__main__':
             parallel_cfg={
                 'pool_size': 10,
                 'max_num_jobs': 10,
-                'randomly_run_jobs': False,
+                'randomly_run_jobs': True,
             },
             run_tasks=[
                 'mosh',
@@ -82,38 +84,36 @@ if __name__ == '__main__':
             fast_dev_run=args.debug_mode,
         )
 
-    wandb_run.log({'mosh_finished': 1, 'time': time.time()})
 
-    # Render
-    mosh_manual(
-        mocap_fnames,
-        mosh_cfg={
-            'moshpp.verbosity': 1,  # set to 2 to visulaize the process in meshviewer
-            'dirs.work_base_dir': osp.join(work_base_dir, 'mosh_results'),
-            'dirs.support_base_dir': support_base_dir,
-        },
-        render_cfg={
-            'dirs.work_base_dir': osp.join(work_base_dir, 'mp4_renders'),
-            'render.render_engine': 'eevee',  # eevee / cycles,
-            # 'render.render_engine': 'cycles',  # eevee / cycles,
-            'render.show_markers': True,
-            # 'render.save_final_blend_file': True
-            'dirs.support_base_dir': support_base_dir,
-            'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
-            'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
-            'temp_base_dir': osp.join(work_base_dir, 'temp'),
-            # 'render.video_fps': 60
-
-        },
-        parallel_cfg={
-            'pool_size': 10,
-            'max_num_jobs': 10,
-            'randomly_run_jobs': False,
-        },
-        run_tasks=[
-            'render',
-        ],
-        fast_dev_run=args.debug_mode,
-    )
-    wandb_run.log({'render_finished': 1, 'time': time.time()})
+    # # Render
+    # mosh_manual(
+    #     mocap_fnames,
+    #     mosh_cfg={
+    #         'moshpp.verbosity': 1,  # set to 2 to visulaize the process in meshviewer
+    #         'dirs.work_base_dir': osp.join(work_base_dir, 'mosh_results'),
+    #         'dirs.support_base_dir': support_base_dir,
+    #     },
+    #     render_cfg={
+    #         'dirs.work_base_dir': osp.join(work_base_dir, 'mp4_renders'),
+    #         'render.render_engine': 'eevee',  # eevee / cycles,
+    #         # 'render.render_engine': 'cycles',  # eevee / cycles,
+    #         'render.show_markers': True,
+    #         # 'render.save_final_blend_file': True
+    #         'dirs.support_base_dir': support_base_dir,
+    #         'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
+    #         'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
+    #         'temp_base_dir': osp.join(work_base_dir, 'temp'),
+    #         # 'render.video_fps': 60
+    #
+    #     },
+    #     parallel_cfg={
+    #         'pool_size': 10,
+    #         'max_num_jobs': 10,
+    #         'randomly_run_jobs': False,
+    #     },
+    #     run_tasks=[
+    #         'render',
+    #     ],
+    #     fast_dev_run=args.debug_mode,
+    # )
     wandb_run.finish()

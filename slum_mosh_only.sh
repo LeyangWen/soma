@@ -3,10 +3,10 @@
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=32g
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=128g
 #SBATCH --partition=standard
 ##SBATCH --partition=debug
 #SBATCH --time=23:30:00

@@ -40,7 +40,6 @@ from soma.render.blender_tools import prepare_render_cfg
 from soma.render.blender_tools import render_mosh_once
 from soma.tools.parallel_tools import run_parallel_jobs
 
-
 def mosh_manual(
         mocap_fnames: list,
         mosh_cfg: dict = None,
@@ -50,7 +49,6 @@ def mosh_manual(
     if parallel_cfg is None: parallel_cfg = {}
     if mosh_cfg is None: mosh_cfg = {}
     if render_cfg is None: render_cfg = {}
-
     run_tasks = kwargs.get('run_tasks', ['mosh', 'render'])
 
     only_stagei = kwargs.get('only_stagei', False)

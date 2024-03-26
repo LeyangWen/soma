@@ -25,6 +25,7 @@ SOMA **automatically transforms raw marker-based mocap point clouds** (black dot
     * or `BOOST_ROOT=$BOOST_ROOT make all `
   * For moshpp install
     * Change `/soma/moshpp/src/moshpp/scan2mesh/mesh_distance/sample2meshdist.h` line 4 to `#include "Eigen/Core"`
+    * Copy the changes in mosh python files (cp snippet below)
     * `cd moshpp/src/moshpp/scan2mesh/mesh_distance` to `make`
     * `cd ../../../..` to `python setup.py install --user`
   * For blender
@@ -77,6 +78,7 @@ Last but not least, the current SOMA code relies on [MoSh++](https://github.com/
 ```bash
   cp support_data/Test-Leyang/marker_vids.py moshpp/src/moshpp/marker_layout/marker_vids.py
   cp support_data/Test-Leyang/create_marker_layout_for_mocaps.py moshpp/src/moshpp/marker_layout/create_marker_layout_for_mocaps.py
+  cp support_data/Test-Leyang/chmosh.py moshpp/src/moshpp/chmosh.py
 ```
 
 Please install MoSh++ following the guidelines in its repository.

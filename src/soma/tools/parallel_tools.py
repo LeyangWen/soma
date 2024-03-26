@@ -35,7 +35,8 @@ from typing import Union
 from loguru import logger
 from omegaconf import DictConfig
 from omegaconf import OmegaConf
-
+import wandb
+import time
 
 def run_parallel_jobs(func, jobs: List[DictConfig], parallel_cfg: DictConfig = None,
                       base_parallel_cfg: Union[DictConfig, Union[Path, str]] = None) -> None:
@@ -75,6 +76,8 @@ def run_parallel_jobs(func, jobs: List[DictConfig], parallel_cfg: DictConfig = N
     elif pool_size < 0:
         return
     else:
-        for job in jobs:
+        for job_id, job in enumerate(jobs):
+            html_text = f"<p>{jobs[-1]['mocap.fname']}</p>"
+            wandb.log({f'job_{job_id}/c3d_file': wandb.Html(html_text), 'job_start_time': time.time()})
             func(job)
             # print(job)

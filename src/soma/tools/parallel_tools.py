@@ -77,7 +77,16 @@ def run_parallel_jobs(func, jobs: List[DictConfig], parallel_cfg: DictConfig = N
         return
     else:
         for job_id, job in enumerate(jobs):
-            html_text = f"<p>{jobs[-1]['mocap.fname']}</p>"
-            wandb.log({f'job_{job_id}/c3d_file': wandb.Html(html_text), 'job_start_time': time.time()})
+            print(jobs)
+            if 'mocap.fname' in job:
+                html_text = f"<p>{job['mocap.fname']}</p>"
+                job_type = 'mosh'
+            elif 'mesh.mosh_stageii_pkl_fnames' in job:
+                html_text = f"<p>{job['mesh.mosh_stageii_pkl_fnames']}</p>"
+                job_type = 'render'
+            else:
+                html_text = f"<p>{job}</p>"
+                job_type = 'unknown'
+            wandb.log({f'{job_type}_{job_id}/c3d_file': wandb.Html(html_text), 'job_start_time': time.time()})
             func(job)
             # print(job)

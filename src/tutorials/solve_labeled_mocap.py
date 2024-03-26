@@ -23,10 +23,10 @@ def parse_args():
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
     parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
-    parser.add_argument('--target_ds_names', nargs='+', default=['S02',], help='Target dataset names')
+    parser.add_argument('--target_ds_names', nargs='+', default=['S05',], help='Target dataset names')
 
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
-    parser.add_argument('--wandb_name', default='Run_S1', help='wandb run name')
+    parser.add_argument('--wandb_name', default='Render', help='wandb run name')
     parser.add_argument('--slurm_id', default=0, type=int, help='The slurm id of this run')
     parser.add_argument('--debug_mode', action='store_true')  # default: False if store_true
     parser.add_argument('--arg_notes', default="Empty", type=str, help='notes for this run, will be stored in wandb')
@@ -50,13 +50,14 @@ if __name__ == '__main__':
 
     for ds_name in target_ds_names:
         mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
+        # mocap_fnames = ['/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original/S05/S05/Activity06.c3d',]
         print('mocap_fnames:', mocap_fnames)
 
         logger.info(f'#mocaps found for {ds_name}: {len(mocap_fnames)}')
         mosh_manual(
             mocap_fnames,
             mosh_cfg={
-                'moshpp.verbosity': 1, # set to 2 to visulaize the process in meshviewer
+                'moshpp.verbosity': 1,  # set to 2 to visualize the process in meshviewer
                 'dirs.work_base_dir': osp.join(work_base_dir, 'mosh_results'),
                 'dirs.support_base_dir': support_base_dir,
             },

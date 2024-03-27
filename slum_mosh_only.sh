@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=Moshpp-Slum-all-20
+#SBATCH --job-name=Moshpp-Slum-all-S10
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
 #SBATCH --mail-type=BEGIN,END,FAIL
@@ -29,13 +29,15 @@ module list
 
 mkdir output_slurm
 
+subject_name="S10"
 slurm_name=$SLURM_JOB_NAME
 #API_KEY="API_KEY"
+
 python -u src/tutorials/solve_labeled_mocap.py \
 --soma_work_base_dir /nfs/turbo/coe-shdpm/leyang/SOMA/VEHS-7M/ \
 --mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/ \
 --target_ds_names c3d \
---target_subject_names S1 \
+--target_subject_names $subject_name \
 --wandb_name $slurm_name \
 --slurm_id ${SLURM_JOB_ID}
 

@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
     parser.add_argument('--target_ds_names', nargs='+', default=['S05',], help='Target dataset names')
-    parser.add_argument('--target_subject_names', nargs='+', default=['S05',], help='Target subject names')
+    parser.add_argument('--target_subject_names', type=str, default='S05', help='One target subject name, use * for all subjects')
 
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
     parser.add_argument('--wandb_name', default='Render', help='wandb run name')
@@ -79,8 +79,8 @@ if __name__ == '__main__':
                 'randomly_run_jobs': True,
             },
             run_tasks=[
-                # 'mosh',
-                'render',
+                'mosh',
+                # 'render',
             ],
             fast_dev_run=args.debug_mode,
         )

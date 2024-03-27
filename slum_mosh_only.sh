@@ -35,8 +35,11 @@ python -u src/tutorials/solve_labeled_mocap.py \
 --soma_work_base_dir /nfs/turbo/coe-shdpm/leyang/SOMA/VEHS-7M/ \
 --mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/ \
 --target_ds_names c3d \
+--target_subject_names S1 \
 --wandb_name $slurm_name \
---slurm_id ${SLURM_JOB_ID} > "output_slurm/${SLURM_JOB_ID}_output.out"
+--slurm_id ${SLURM_JOB_ID}
+
+#> "output_slurm/${SLURM_JOB_ID}_output.out"
 
 #--debug_mode \
 

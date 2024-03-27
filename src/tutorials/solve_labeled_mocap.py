@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
     parser.add_argument('--target_ds_names', nargs='+', default=['S05',], help='Target dataset names')
+    parser.add_argument('--target_subject_names', nargs='+', default=['S05',], help='Target subject names')
 
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
     parser.add_argument('--wandb_name', default='Render', help='wandb run name')
@@ -47,7 +48,7 @@ if __name__ == '__main__':
     wandb_run = wandb.init(project=args.wandb_project, name=args.wandb_name, notes=args.arg_notes)
 
     for ds_name in target_ds_names:
-        mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  '*/*.c3d'))
+        mocap_fnames = glob(osp.join(mocap_base_dir, ds_name,  f'{args.target_subject_names}/*.c3d'))
         # mocap_fnames = ['/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original/S05/S05/Activity06.c3d',]
         print('mocap_fnames:', mocap_fnames)
 
@@ -73,46 +74,15 @@ if __name__ == '__main__':
 
             },
             parallel_cfg={
-                'pool_size': 10,
-                'max_num_jobs': 10,
+                'pool_size': 3,
+                'max_num_jobs': 3,
                 'randomly_run_jobs': True,
             },
             run_tasks=[
-                'mosh',
+                # 'mosh',
+                'render',
             ],
             fast_dev_run=args.debug_mode,
         )
 
-
-    # # Render
-    # mosh_manual(
-    #     mocap_fnames,
-    #     mosh_cfg={
-    #         'moshpp.verbosity': 1,  # set to 2 to visulaize the process in meshviewer
-    #         'dirs.work_base_dir': osp.join(work_base_dir, 'mosh_results'),
-    #         'dirs.support_base_dir': support_base_dir,
-    #     },
-    #     render_cfg={
-    #         'dirs.work_base_dir': osp.join(work_base_dir, 'mp4_renders'),
-    #         'render.render_engine': 'eevee',  # eevee / cycles,
-    #         # 'render.render_engine': 'cycles',  # eevee / cycles,
-    #         'render.show_markers': True,
-    #         # 'render.save_final_blend_file': True
-    #         'dirs.support_base_dir': support_base_dir,
-    #         'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
-    #         'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
-    #         'temp_base_dir': osp.join(work_base_dir, 'temp'),
-    #         # 'render.video_fps': 60
-    #
-    #     },
-    #     parallel_cfg={
-    #         'pool_size': 10,
-    #         'max_num_jobs': 10,
-    #         'randomly_run_jobs': False,
-    #     },
-    #     run_tasks=[
-    #         'render',
-    #     ],
-    #     fast_dev_run=args.debug_mode,
-    # )
     wandb_run.finish()

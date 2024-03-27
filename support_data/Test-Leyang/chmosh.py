@@ -584,6 +584,8 @@ def mosh_stageii(mocap_fname: str, cfg: DictConfig, markers_latent: np.array,
 
     for fIdx, t in enumerate(selected_frames):
 
+        verbose = True if fIdx % 1000 == 0 or len(selected_frames) - fIdx < 10 else False
+
         if len(observed_markers_dict[t]) == 0:
             logger.error(f'no available observed markers for frame {t}. skipping the frame.')
             continue
@@ -660,8 +662,9 @@ def mosh_stageii(mocap_fname: str, cfg: DictConfig, markers_latent: np.array,
                 dmpl_prev = opt_model.dmpl.r.copy()
 
         # 1. Warm start to correct pose
-        logger.debug(
-            f'{fIdx:04d}/{len(selected_frames):04d} -- Step 1. initial loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
+        if verbose:
+            logger.debug(
+                f'{fIdx:04d}/{len(selected_frames):04d} -- Step 1. initial loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
         wandb.log({'stageii_frame': fIdx, 'stageii_%': fIdx / len(selected_frames)})
         pose_ids = pose_root_ids + pose_body_ids
         if len(pose_body_ids) and not cfg.moshpp.optimize_toes:
@@ -670,8 +673,9 @@ def mosh_stageii(mocap_fname: str, cfg: DictConfig, markers_latent: np.array,
         ch.minimize(fun=list(opt_objs.values()) if cfg.moshpp.verbosity == 0 else opt_objs, x0=free_vars,
                     method='dogleg',
                     options={'e_3': .01, 'delta_0': 5e-1, 'disp': None, 'maxiter': cfg.opt_settings.maxiter})
-        logger.debug(
-            f'{fIdx:04d}/{len(selected_frames):04d} -- Step 1. final loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
+        if verbose:
+            logger.debug(
+                f'{fIdx:04d}/{len(selected_frames):04d} -- Step 1. final loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
 
         # 2. Fit for full pose
         free_vars = [opt_model.trans]
@@ -699,12 +703,14 @@ def mosh_stageii(mocap_fname: str, cfg: DictConfig, markers_latent: np.array,
             opt_objs['dmpl'] = opt_model.dmpl * wt_dmpl
             free_vars += [opt_model.dmpl]
 
-        logger.debug(
-            f'{fIdx:04d}/{len(selected_frames):04d} -- Step 2. initial loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
+        if verbose:
+            logger.debug(
+                f'{fIdx:04d}/{len(selected_frames):04d} -- Step 2. initial loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
         ch.minimize(fun=list(opt_objs.values()) if cfg.moshpp.verbosity == 0 else opt_objs, x0=free_vars,
                     method='dogleg',
                     options={'e_3': .01, 'delta_0': 5e-1, 'disp': None, 'maxiter': cfg.opt_settings.maxiter})
-        logger.debug(
+        if verbose:
+            logger.debug(
             f'{fIdx:04d}/{len(selected_frames):04d} -- Step 2. final loss values: {" | ".join(["{} = {:2.2e}".format(k, np.sum(v.r ** 2)) for k, v in opt_objs.items()])}')
 
         if on_step: on_step(markers_obs=markers_obs.r, markers_sim=markers_sim.r, sim_labels=sim_labels,

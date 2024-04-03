@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=Moshpp-Slum-all-S10
+#SBATCH --job-name=Moshpp-S03-00
 #SBATCH --output=output_slurm/log_0.txt
 #SBATCH --error=output_slurm/error_0txt
 #SBATCH --mail-type=BEGIN,END,FAIL
@@ -9,7 +9,7 @@
 #SBATCH --mem=128g
 #SBATCH --partition=standard
 ##SBATCH --partition=debug
-#SBATCH --time=25:00:00
+#SBATCH --time=24:00:00
 #SBATCH --account=shdpm0
 ##### END preamble
 
@@ -29,7 +29,7 @@ module list
 
 mkdir output_slurm
 
-subject_name="S10"
+subject_name="S03"
 slurm_name=$SLURM_JOB_NAME
 #API_KEY="API_KEY"
 
@@ -38,6 +38,7 @@ python -u src/tutorials/solve_labeled_mocap.py \
 --mocap_base_dir /nfs/turbo/coe-shdpm/leyang/VEHS-7M/ \
 --target_ds_names c3d \
 --target_subject_names $subject_name \
+--wandb_project Moshpp-VEHS-7M-slurm \
 --wandb_name $slurm_name \
 --slurm_id ${SLURM_JOB_ID}
 

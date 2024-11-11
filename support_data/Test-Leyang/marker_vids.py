@@ -2,7 +2,8 @@ from moshpp.marker_layout.markerset_smplh2smplx import smplh2smplx
 # copy and replace moshpp/src/moshpp/marker_layout/marker_vids.py
 # custom marker vids for VEHS-7M markers
 
-all_marker_vids = {'smplx': {
+all_marker_vids = {'smpl':{},
+                    'smplx': {
                         'HDTP':	    9011,
                         'REAR':	    1050,
                         'LEAR':	    560,

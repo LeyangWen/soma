@@ -23,14 +23,14 @@ def parse_args():
     # parser.add_argument('--support_base_dir', type=str, default=None, help='The base directory for support files')
     parser.add_argument('--mocap_base_dir', type=str, default='/home/leyang/Documents/soma/SOMA_VEHS/support_files/evaluation_mocaps/original', help='The base directory for mocap files')
     # parser.add_argument('--work_base_dir', type=str, default=None, help='The base directory for work files')
-    parser.add_argument('--target_ds_names', nargs='+', default=['S05',], help='Target dataset names')
-    parser.add_argument('--target_subject_names', type=str, default='S05', help='One target subject name, use * for all subjects')
+    parser.add_argument('--target_ds_names', nargs='+', default=['S02',], help='Target dataset names')
+    parser.add_argument('--target_subject_names', type=str, default='S02', help='One target subject name, use * for all subjects')
     
     parser.add_argument('--wandb_project', default='Moshpp-VEHS-7M', help='wandb project name')
-    parser.add_argument('--wandb_name', default='Render', help='wandb run name')
+    parser.add_argument('--wandb_name', default='smpl-debug', help='wandb run name')
     parser.add_argument('--slurm_id', default=0, type=int, help='The slurm id of this run')
-    parser.add_argument('--debug_mode', action='store_true')  # default: False if store_true
-    parser.add_argument('--arg_notes', default="Empty", type=str, help='notes for this run, will be stored in wandb')
+    parser.add_argument('--debug_mode', action='store_false')  # default: False if store_true
+    parser.add_argument('--arg_notes', default="smpl", type=str, help='notes for this run, will be stored in wandb')
 
     # Parse the arguments
     args = parser.parse_args()
@@ -58,6 +58,7 @@ if __name__ == '__main__':
                 'moshpp.verbosity': 1,  # set to 2 to visualize the process in meshviewer
                 'dirs.work_base_dir': osp.join(work_base_dir, 'mosh_results'),
                 'dirs.support_base_dir': support_base_dir,
+                'surface_model.type': 'smpl'
             },
             render_cfg={
                 'dirs.work_base_dir': osp.join(work_base_dir, 'mp4_renders'),
@@ -69,8 +70,8 @@ if __name__ == '__main__':
                 'dirs.mesh_out_dir': osp.join(work_base_dir, 'meshes'),
                 'dirs.png_out_dir': osp.join(work_base_dir, 'pngs'),
                 'temp_base_dir': osp.join(work_base_dir, 'temp'),
-                # 'render.video_fps': 60
-
+                # 'render.video_fps': 60,
+                'surface_model.type': 'smpl'
             },
             parallel_cfg={
                 'pool_size': 2,
